@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7e7ef69da7248742e869378f8421880cf8f0017f96d94d086813baa518a65489"
+            "sha256": "450ee00fc5d57917a6a1d3f32fad608c48f7cc378155303e16db2120533d5bc5"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.7"
+            "python_version": "3.8"
         },
         "sources": [
             {
@@ -15,6 +15,15 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "pyexiftool": {
+            "hashes": [
+                "sha256:0fcf0aa29950882cc33395ad683b2e3067480e5237606b6741f0d28aeb9dd475",
+                "sha256:a6c029fddec3b8f203a327ac1865f9c0173b22a2423c7edc81b33fa3153d34f3"
+            ],
+            "index": "pypi",
+            "version": "==0.4.9"
+        }
+    },
     "develop": {}
 }
