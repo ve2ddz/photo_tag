@@ -69,3 +69,31 @@ et.set_tags({'keywords':keywords,'tagslist':tagslist},'sample')
 
 # adjust timezone for camera as needed 00:00 UTC, -04:00 EDT, -05:00 EST
 et.execute(b'-geotag = sample/SOTA VE2_LR-094 2021-05-24.gpx', b'-geotime<${createdate}-00:00', b'sample')
+```
+Works:  
+`et.execute(*[item.encode('utf-8') for item in copyright_command_args],image_directory.encode('utf-8'))`  
+So does:  
+`et.execute(*map(str.encode,copyright_command_args),image_directory.encode('utf-8'))`
+But the following does not:  
+`et.execute(*map(str.encode('utf-8',copyright_command_args),image_directory.encode('utf-8'))`
+To convert between bytes and str:
+
+* `iminbytes = iminstr.encode('UTF-8')`
+* `iminstr = iminbytes.decode('UTF-8')`
+* `imamapinbytes = map(str.encode('UTF-8'),imalistofstr)`
+* `imalistinbytes = list(map(str.encode('UTF-8'),imalistofstr))`
+* or `imalistinbytes = [item.encode('UTF-8') for item in imalistofstr]`
+* to try `imindividualbyte = *map(str.encode('UTF-8'),imalistofstr)`
+
+See:
+
+* [SO: Square root list in python [duplicate]](https://stackoverflow.com/q/67255843/236080)
+* [SO: Apply function to each element of a list](https://stackoverflow.com/q/25082410/236080)
+
+For bytes vs str see the excellent presentation at
+[Ned Batchelder: Pragmatic Unicode](https://nedbatchelder.com/text/unipain.html)
+
+Further reading:
+* Found at: [betterprogramming.pub](https://betterprogramming.pub/strings-unicode-and-bytes-in-python-3-everything-you-always-wanted-to-know-27dc02ff2686)
+* [Joel Spolsky](http://www.joelonsoftware.com/articles/Unicode.html)
+* unicodedata module in the Python standard library
