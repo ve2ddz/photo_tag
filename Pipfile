@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pyexiftool = "*"
+filetype = "*"
 
 [dev-packages]
 

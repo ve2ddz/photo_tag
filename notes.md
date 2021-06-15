@@ -97,3 +97,85 @@ Further reading:
 * Found at: [betterprogramming.pub](https://betterprogramming.pub/strings-unicode-and-bytes-in-python-3-everything-you-always-wanted-to-know-27dc02ff2686)
 * [Joel Spolsky](http://www.joelonsoftware.com/articles/Unicode.html)
 * unicodedata module in the Python standard library
+
+## 2021-06-13
+Mostly implemented
+
+### To do
+- [ ] get tagging parameters into the script nicely
+    * json?
+    * input
+    * combo?
+- [ ] set the timezone offset -04:00 or -05:00 or -00:00 or ...
+- [ ] allow setting a camera time corrction
+- [ ] produce kml
+- [ ] add pics and thumbnails to kml
+- [ ] allow specification of a subset of pics to add to kml
+
+## Configuration
+
+* SOTA - Y/N
+    * If Y
+    * filenames from
+        * SOTA Ref
+        * SOTA summit - if available
+        * Photo date
+            * is this always to the nearest day?
+
+## Counting (image) files
+
+Given a directory return how many files are there?
+```python
+
+# need os for listdir() and scandir()
+# need python 3.5+ for scandir()
+# can use scandir module https://pypi.org/project/scandir/ if python --version < 3.5
+
+# Use listdir() https://stackoverflow.com/a/2632251/236080
+print len([name for name in os.listdir('.') if os.path.isfile(name)])
+# need to path the path to name if directory of interest is not '.'
+
+# Use scandir() https://stackoverflow.com/a/44043720/236080
+print(len([1 for x in list(os.scandir('.')) if x.is_file()]))
+
+# filter on extension using fnmatch: https://stackoverflow.com/a/16865840/236080
+import fnmatch
+print(len(fnmatch.filter(os.listdir('.'), '*.jpg')))
+
+# Could do
+image_extensions = ['*.jpg','*.mp4']
+print(sum(len(fnmatch.filter(os.listdir('.'), image_ext)) for image_ext in image_extensions)
+
+# detect image formats
+
+# using the filetype package: https://stackoverflow.com/a/61195193/236080
+# requires installation from pip
+
+import os
+
+import filetype
+
+# simplify the constructor
+print(sum(x.is_file() for x in os.scandir('.')))
+
+# now image and video files only
+
+filetype.is_image(filename) or filetype.is_video(filename)
+
+# Works a treat:
+sum(filetype.is_image(filename.path) or filetype.is_video(filename.path) for filename in os.scandir('sample'))
+
+# May be better use of resources:
+with os.scandir('sample') as image_directory:
+    n_images = sum(filetype.is_image(filename.path) or filetype.is_video(filename.path) for filename in image_directory)
+    gpstraces = fnmatch.filter(image_directory,'*.gpx')
+image_directory.close()
+
+# Using
+
+```python
+
+# install from pip
+import filetype
+
+import os
