@@ -1,25 +1,24 @@
 #!
-# -*- coding: utf-8 -*-
 
 import math
 import exiftool
 #from collections import namedtuple
 
 # Get args
-image_date = '2020-06-25'
+image_date = '2017-10-28'
 sota_pre = 'VE2'
-sota_suf = 'LR-005'
-sota_summit = 'Montagne Noire'
+sota_suf = 'LR-042'
+sota_summit = 'Mont Saint-Loup'
 
 park_name = None
 wwff = None
 
 #image_directory = '.'
 image_directory = 'sample'
-n_images = 99
+n_images = 25
 
 additional_keywords = [
-    'Sentier Inter-Centre'
+
 ]
 
 # Computed
@@ -82,6 +81,7 @@ et.start()
 # Commands other than tag operations require execute
 print('renaming and creation times')
 result = et.execute(
+    '-fileOrder'.encode('utf-8'), 'DateTimeOriginal'.encode('utf-8')    ,
     ('-filename='+image_filename_template).encode('utf-8'),
     '-filemodifydate<createdate'.encode('utf-8'),
     image_directory.encode('utf-8')
@@ -106,12 +106,14 @@ print(result)
 # Finally geotag
 print()
 print('Geotagging')
-result = et.execute(\
+result = et.execute(
+    '-api'.encode('utf-8'), 'geomaxintsecs=14400'.encode('utf-8'),
 #    ('-geotag='+image_directory+'/SOTA VE2_LR-005 Montagne Noire 2020-06-25.gpx').encode('utf-8'),\
-    '-geotag'.encode('utf-8'), (image_directory+'/*.*x').encode('utf-8'),\
+    '-geotag'.encode('utf-8'), (image_directory+'/*.*x').encode('utf-8'),
 #    '-geotag'.encode('utf-8'), (image_directory+'/*.tcx').encode('utf-8'),\
 #    ('-geotag '+image_directory+'/*.tcx').encode('utf-8'),\
-    '-geotime<${createdate}-04:00'.encode('utf-8'),\
+    '-geosync=-0:00'.encode('utf-8'),
+    '-geotime<${createdate}-04:00'.encode('utf-8'),
     image_directory.encode('utf-8'))
 print(result)
 
