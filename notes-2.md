@@ -29,3 +29,6 @@ print(gpstraces)
 ```
 `[<DirEntry 'SOTA VE2_LR-081 Mont Bondy 2021-07-11.gpx'>]`
 `print(gpstraces[0].path)`: `sample\SOTA VE2_LR-081 Mont Bondy 2021-07-11.gpx`
+
+Save also:
+`exiftool -G -n -overwrite_original -P -api geomaxintsecs=14400 -geotag "./*.*x" "-geotime<${createdate}-00:00" .`
