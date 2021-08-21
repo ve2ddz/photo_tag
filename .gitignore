@@ -175,3 +175,15 @@ Thumbs.db
 instance/
 
 *.code-workspace
+
+## Data file types unless explicitly added
+
+# Image files
+*.jpg
+
+# Location trace files
+*.gpx
+*.tcx
+
+# Tag files
+*.json
