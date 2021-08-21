@@ -106,11 +106,14 @@ Mostly implemented
     * json?
     * input
     * combo?
+    * areparse and file, but the file format is grotty
 - [ ] set the timezone offset -04:00 or -05:00 or -00:00 or ...
+    - -00:00 if camera is in z
 - [ ] allow setting a camera time corrction
 - [ ] produce kml
 - [ ] add pics and thumbnails to kml
 - [ ] allow specification of a subset of pics to add to kml
+- [ ] switch to ConfigArgParse for a combined cli argument and config file approach.
 
 ## Configuration
 

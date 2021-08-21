@@ -1,17 +1,22 @@
 #!
 
+import os, os.path  # Needed only to count files (so far)
 
-import math
+import math         # Needed only to compute one logarithm (so far)
 import argparse
 
 import exiftool
-#from collections import namedtuple
 
 # Get args
 
 parser=argparse.ArgumentParser(
     description = "Front end for tagging phots using exiftool",
     fromfile_prefix_chars='@',
+)
+
+parser.add_argument('images',
+    help = "Directory (of images) to process",
+    default = ".",
 )
 
 parser.add_argument('--date',
@@ -28,13 +33,13 @@ parser.add_argument('--sota_summit',
     help = "SOTA summit name",
 )
 
-sota_ref = 'VE2/ES-034'
+#sota_ref = 'VE2/ES-034'
 
-sota_pre, sota_suf = sota_ref.split("/")
+#sota_pre, sota_suf = sota_ref.split("/")
 
 #sota_pre = 'VE2'
 #sota_suf = 'ES-034'
-sota_summit = 'Mont des Trois-Lacs'
+#sota_summit = 'Mont des Trois-Lacs'
 
 parser.add_argument('--park',
     help = "Name of location",
@@ -87,67 +92,63 @@ parser.add_argument('--keywords',
     default = [],
 )
 
-event = "Skeeter Hunt"
-
-parser.add_argument('--images',
-    help = "Directory (of images) to process",
-    default = ".",
+parser.add_argument('--digits',
+    help = "Numer of digits to use when renaming",
+    default = None,
 )
 
-# Required, default to .
-#image_directory = '.'
-image_directory = 'sample2'
+
+# event = "Skeeter Hunt"
 
 args = parser.parse_args()
 
-image_directory = args.images
-
 print(args)
 
-# To do determine this programmatically
-n_images = 17
-d_images = None
-
+image_directory = args.images
+d_images = args.digits
 additional_keywords = args.keywords
+event = args.event
 
-# Computed
 if d_images is None:
-    d_images = int(math.log10(n_images)+1)
+    d_images  = int(math.log10(len(os.listdir(image_directory)))+1)
 
 image_date_string = image_date
 
-image_filename_template= ' '.join([
-    'SOTA',
-    sota_pre+'_'+sota_suf,
-    sota_summit,
-    image_date_string,
-    event,
-    f'%1.{d_images}C.%le'
-])
+sota = args.sota_ref
+sota_summit = args.sota_summit
+
+if sota:
+    sota_ref_cleaned = '_'.join(sota.split('/'))
+    image_filename_template= ' '.join([
+        'SOTA',
+        sota_ref_cleaned,
+        sota_summit,
+        image_date_string,
+        *event,
+        f'%1.{d_images}C.%le'
+    ])
 
 # FIXME
 # Add provision if sota_summit is empty or undefined
 
 keywords = [
     'SOTA',
-    sota_suf,
+    sota,
     sota_summit,
 ]
 
 tagslist = [
     'SOTA',
-    sota_pre+'/'+sota_suf,
+    sota_ref_cleaned,
     sota_summit,
 ]
 
 for activity in args.activity:
-    print(activity)
     activity_category, _, activity_reference = activity.partition('/')
     print(f"{activity_category=} {activity_reference=}")
     additional_keywords.append(activity_category)
     if len(activity_reference):
-        keywords.append(activity_reference)
-    tagslist.append(activity)
+        additional_keywords.append(activity)
 
 """
 if wwff is not None:
@@ -174,9 +175,7 @@ for i in set(args.event + args.park):
     additional_keywords.append(i)
 
 keywords += additional_keywords
-keywords.append("a keyword")
 tagslist += additional_keywords
-tagslist.append("a tag")
 
 print(f"{keywords=} {tagslist=}")
 
@@ -230,7 +229,6 @@ result = et.execute(*[\
     image_directory.encode('utf-8'))
 print(result)
 
-"""
 # Finally geotag
 print()
 print('Geotagging')
@@ -245,7 +243,6 @@ result = et.execute(
     '-geotime<${createdate}-00:00'.encode('utf-8'),
     image_directory.encode('utf-8'))
 print(result)
-"""
 
 # Close up exiftool process
 et.terminate()
