@@ -1,0 +1,4 @@
+--sota_ref
+VE2/ES-034
+--sota_summit
+Mont des Trois-Lacs

@@ -107,10 +107,24 @@ print(args)
 image_directory = args.images
 d_images = args.digits
 additional_keywords = args.keywords
+
+# FIXME
+# event is used in the filename template
+# There are illegal characters that should be filtered
+# some characters can have unexpected results
+# For example with 2021/08/15 exiftool will create subdirectories.
+
 event = args.event
 
 if d_images is None:
     d_images  = int(math.log10(len(os.listdir(image_directory)))+1)
+
+
+# FIXME
+# Imagedatestring is used in the filename template
+# There are illegal characters that should be filtered
+# some characters can have unexpected results
+# For example with 2021/08/15 exiftool will create subdirectories.
 
 image_date_string = image_date
 
@@ -205,6 +219,12 @@ et = exiftool.ExifTool(common_args = ['-G','-n', '-overwrite_original','-P'])
 et.start()
 
 # Commands other than tag operations require execute
+
+# FIXME Why is DateTimeOriginal canonical for fileorder, but CreateData is canonical for filemodifydate?
+# Geotagging later uses createdate
+
+# TODO enable optional setting of geomaxintsecs in geotagging command
+
 print('renaming and creation times')
 result = et.execute(
     '-fileOrder'.encode('utf-8'), 'DateTimeOriginal'.encode('utf-8')    ,
@@ -233,7 +253,8 @@ print(result)
 print()
 print('Geotagging')
 result = et.execute(
-    '-api'.encode('utf-8'), 'geomaxintsecs=14400'.encode('utf-8'),
+#    '-api'.encode('utf-8'), 'geomaxintsecs=14400'.encode('utf-8'),
+    '-api'.encode('utf-8'), 'geomaxintsecs=25200'.encode('utf-8'),
 #    ('-geotag='+image_directory+'/SOTA VE2_LR-005 Montagne Noire 2020-06-25.gpx').encode('utf-8'),\
     '-geotag'.encode('utf-8'), (image_directory+'/*.*x').encode('utf-8'),
 #    '-geotag'.encode('utf-8'), (image_directory+'/*.tcx').encode('utf-8'),\
