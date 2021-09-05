@@ -106,10 +106,18 @@ Mostly implemented
     * json?
     * input
     * combo?
-    * areparse and file, but the file format is grotty
+    * argparse and file, but the file format is grotty - DONE
+    * argparse extension with nicer file handling
 - [ ] set the timezone offset -04:00 or -05:00 or -00:00 or ...
     - -00:00 if camera is in z
-- [ ] allow setting a camera time corrction
+- [ ] allow setting a camera time correction
+    * geosync = +/- M:SS - if camera is fast, + if camera is slow
+    * default -0:00
+- [ ] allow setting the camera timezone
+    * geotime ... -HH:MM  -00:00 is zulu, -04:00 is EDT etc
+    * default -00:00
+- [ ] allow setting the max int secs
+    * default 14400
 - [ ] produce kml
 - [ ] add pics and thumbnails to kml
 - [ ] allow specification of a subset of pics to add to kml

@@ -126,7 +126,8 @@ if d_images is None:
 # some characters can have unexpected results
 # For example with 2021/08/15 exiftool will create subdirectories.
 
-image_date_string = image_date
+#image_date_string = image_date
+image_date_string = args.date
 
 sota = args.sota_ref
 sota_summit = args.sota_summit
@@ -253,14 +254,15 @@ print(result)
 print()
 print('Geotagging')
 result = et.execute(
-#    '-api'.encode('utf-8'), 'geomaxintsecs=14400'.encode('utf-8'),
-    '-api'.encode('utf-8'), 'geomaxintsecs=25200'.encode('utf-8'),
+    '-api'.encode('utf-8'), 'geomaxintsecs=14400'.encode('utf-8'),
+#    '-api'.encode('utf-8'), 'geomaxintsecs=25200'.encode('utf-8'),
 #    ('-geotag='+image_directory+'/SOTA VE2_LR-005 Montagne Noire 2020-06-25.gpx').encode('utf-8'),\
     '-geotag'.encode('utf-8'), (image_directory+'/*.*x').encode('utf-8'),
 #    '-geotag'.encode('utf-8'), (image_directory+'/*.tcx').encode('utf-8'),\
 #    ('-geotag '+image_directory+'/*.tcx').encode('utf-8'),\
-    '-geosync=-0:00'.encode('utf-8'),
-#   '-geotime<${createdate}-04:00'.encode('utf-8'),
+#    '-geosync=-0:00'.encode('utf-8'),
+    '-geosync=-0:58'.encode('utf-8'),
+#    '-geotime<${createdate}-04:00'.encode('utf-8'),
     '-geotime<${createdate}-00:00'.encode('utf-8'),
     image_directory.encode('utf-8'))
 print(result)
