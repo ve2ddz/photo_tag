@@ -31,6 +31,7 @@ parser.add_argument('--sota_ref',
 
 parser.add_argument('--sota_summit',
     help = "SOTA summit name",
+    default = '',
 )
 
 #sota_ref = 'VE2/ES-034'
@@ -149,15 +150,17 @@ if sota:
 keywords = [
     'SOTA',
     sota,
-    sota_summit,
 ]
 
 tagslist = [
     'SOTA',
     sota_ref_cleaned,
-    sota_summit,
 ]
 
+if sota_summit:
+    keywords.append(sota_summit)
+    tagslist.append(sota_summit)
+    
 for activity in args.activity:
     activity_category, _, activity_reference = activity.partition('/')
     print(f"{activity_category=} {activity_reference=}")
