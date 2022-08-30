@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "phototag"
+version = "0.1.1"
+description = ""
+authors = ["Malcolm Harper <ve2ddz@ve2ddz.ca>"]
+license = "GPL 3.0"
+readme = "README.md"
+#packages = [
+#    { include = "ve2ddz" },
+#]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pyexiftool = "^0.4.9"
+# hamutils = "^0.2.1"
+# python-dateutil = "^2.8.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+flake8 = "^3.9.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

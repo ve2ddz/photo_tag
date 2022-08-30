@@ -257,14 +257,15 @@ print(result)
 print()
 print('Geotagging')
 result = et.execute(
-    '-api'.encode('utf-8'), 'geomaxintsecs=14400'.encode('utf-8'),
+    '-api'.encode('utf-8'), 'geomaxintsecs=28800'.encode('utf-8'),
 #    '-api'.encode('utf-8'), 'geomaxintsecs=25200'.encode('utf-8'),
 #    ('-geotag='+image_directory+'/SOTA VE2_LR-005 Montagne Noire 2020-06-25.gpx').encode('utf-8'),\
     '-geotag'.encode('utf-8'), (image_directory+'/*.*x').encode('utf-8'),
 #    '-geotag'.encode('utf-8'), (image_directory+'/*.tcx').encode('utf-8'),\
 #    ('-geotag '+image_directory+'/*.tcx').encode('utf-8'),\
 #    '-geosync=-0:00'.encode('utf-8'),
-    '-geosync=-0:58'.encode('utf-8'),
+    '-geosync=-3:55'.encode('utf-8'),
+#    '-geosync=-0:58'.encode('utf-8'),
 #    '-geotime<${createdate}-04:00'.encode('utf-8'),
     '-geotime<${createdate}-00:00'.encode('utf-8'),
     image_directory.encode('utf-8'))
